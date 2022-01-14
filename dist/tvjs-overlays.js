@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Fri Jul 09 2021
+ * TVJS Overlays - v0.5.0 - Fri Jan 14 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -2299,6 +2299,7 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       ctx.lineWidth = this.hist_width;
       ctx.strokeStyle = this.color;
       ctx.beginPath();
+      var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
 
       var _iterator = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
           _step;
@@ -2306,13 +2307,11 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
-          var x = layout.t2screen(p[0]) - off;
-          var y = layout.$2screen(p[1]) - 0.5;
-          ctx.strokeStyle = this.sett.histColors[p[4]];
-          ctx.beginPath();
-          ctx.moveTo(x, base);
-          ctx.lineTo(x, y);
-          ctx.stroke();
+          var x = layout.t2screen(p[0]) - width / 2;
+          var y = p[1] > 0 ? layout.$2screen(p[1]) : layout.$2screen(0);
+          var height = Math.abs(layout.$2screen(p[1]) - layout.$2screen(0));
+          ctx.fillStyle = this.sett.histColors[p[4]];
+          ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height));
         } // MACD LINE
 
       } catch (err) {

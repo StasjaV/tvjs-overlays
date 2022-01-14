@@ -42,14 +42,15 @@ export default {
             ctx.strokeStyle = this.color
             ctx.beginPath()
 
+
+			var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]))
+
             for (var p of this.$props.data) {
-                let x = layout.t2screen(p[0]) - off
-                let y = layout.$2screen(p[1]) - 0.5
-                ctx.strokeStyle = this.sett.histColors[p[4]]
-                ctx.beginPath()
-                ctx.moveTo(x, base)
-                ctx.lineTo(x, y)
-                ctx.stroke()
+				let x = layout.t2screen(p[0]) - width/2
+                let y = p[1] > 0 ? layout.$2screen(p[1]) : layout.$2screen(0)
+				let height = Math.abs(layout.$2screen(p[1]) - layout.$2screen(0))
+		        ctx.fillStyle = this.sett.histColors[p[4]]
+		        ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height))
             }
 
             // MACD LINE
