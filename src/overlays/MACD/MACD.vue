@@ -53,36 +53,53 @@ export default {
 		        ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height))
             }
 
-            // MACD LINE
+			if ( !this.hist_only ) {
+				// MACD LINE
 
-            ctx.beginPath()
+	            ctx.beginPath()
 
-            ctx.lineWidth = this.macd_width
-            ctx.strokeStyle = this.macd_color
+	            ctx.lineWidth = this.macd_width
+	            ctx.strokeStyle = this.macd_color
 
-            for (var p of this.$props.data) {
-                let x = layout.t2screen(p[0])
-                let y = layout.$2screen(p[2])
-                ctx.lineTo(x, y)
-            }
+	            for (var p of this.$props.data) {
+	                let x = layout.t2screen(p[0])
+	                let y = layout.$2screen(p[2])
+	                ctx.lineTo(x, y)
+	            }
 
-            ctx.stroke()
+	            ctx.stroke()
 
-            // SIGNAL LINE
+	            // SIGNAL LINE
 
-            ctx.beginPath()
+	            ctx.beginPath()
 
-            ctx.lineWidth = this.signal_width
-            ctx.strokeStyle = this.signal_color
+	            ctx.lineWidth = this.signal_width
+	            ctx.strokeStyle = this.signal_color
 
-            for (var p of this.$props.data) {
-                let x = layout.t2screen(p[0])
-                let y = layout.$2screen(p[3])
-                ctx.lineTo(x, y)
-            }
+	            for (var p of this.$props.data) {
+	                let x = layout.t2screen(p[0])
+	                let y = layout.$2screen(p[3])
+	                ctx.lineTo(x, y)
+	            }
 
-            ctx.stroke()
+	            ctx.stroke()
+			}
 
+			if ( this.segment != null ) {
+				ctx.lineWidth = this.segment.line_width
+				ctx.strokeStyle = this.segment.color
+				ctx.beginPath()
+
+				let x1 = layout.t2screen(this.segment.p1[0])
+				let y1 = layout.$2screen(this.segment.p1[1])
+				ctx.moveTo(x1, y1)
+
+				let x2 = layout.t2screen(this.segment.p2[0])
+				let y2 = layout.$2screen(this.segment.p2[1])
+				ctx.lineTo(x2, y2)
+
+				ctx.stroke()
+			}
 
         },
         use_for() { return ['MACD'] },
@@ -145,7 +162,13 @@ export default {
         },
         hist_colors() {
             return this.sett.histColors
-        }
+        },
+		segment() {
+			return this.sett.segment
+		},
+		hist_only() {
+			return this.sett.histOnly
+		}
     }
 }
 </script>
