@@ -27,6 +27,7 @@ import KC from './overlays/KC/KC.vue'
 import KCW from './overlays/KCW/KCW.vue'
 import LongShortTrades from './overlays/LongShortTrades/LongShortTrades.vue'
 import MACD from './overlays/MACD/MACD.vue'
+import MACDHist from './overlays/MACD/MACDHist.vue'
 import MFI from './overlays/MFI/MFI.vue'
 import MOM from './overlays/MOM/MOM.vue'
 import Markers from './overlays/Markers/Markers.vue'
@@ -65,6 +66,7 @@ const Pack = {
     KCW,
     LongShortTrades,
     MACD,
+	MACDHist,
     MFI,
     MOM,
     Markers,
@@ -110,6 +112,7 @@ export {
     KCW,
     LongShortTrades,
     MACD,
+	MACDHist,
     MFI,
     MOM,
     Markers,

@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Thu May 19 2022
+ * TVJS Overlays - v0.5.0 - Fri May 20 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -112,6 +112,7 @@ __webpack_require__.d(__webpack_exports__, {
   "KCW": () => (/* reexport */ KCW),
   "LongShortTrades": () => (/* reexport */ LongShortTrades),
   "MACD": () => (/* reexport */ MACD),
+  "MACDHist": () => (/* reexport */ MACDHist),
   "MFI": () => (/* reexport */ MFI),
   "MOM": () => (/* reexport */ MOM),
   "Markers": () => (/* reexport */ Markers),
@@ -2482,6 +2483,201 @@ var MACD_component = normalizeComponent(
 if (false) { var MACD_api; }
 MACD_component.options.__file = "src/overlays/MACD/MACD.vue"
 /* harmony default export */ const MACD = (MACD_component.exports);
+;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/overlays/MACD/MACDHist.vue?vue&type=script&lang=js&
+function MACDHistvue_type_script_lang_js_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = MACDHistvue_type_script_lang_js_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function MACDHistvue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return MACDHistvue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return MACDHistvue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+// TODO: pass colors from settings to the script
+// TODO: hist lines => recangles (like in volbar.js)
+
+/* harmony default export */ const MACDHistvue_type_script_lang_js_ = ({
+  name: 'MACDHist',
+  mixins: [external_trading_vue_js_.Overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'StdSquad',
+        version: '1.0.2',
+        desc: 'Moving Average Convergence/Divergence',
+        preset: {
+          name: 'MACD $fast $slow $smooth',
+          side: 'offchart',
+          settings: {
+            histWidth: 4,
+            macdWidth: 1,
+            signalWidth: 1,
+            defColor: "#42b28a",
+            macdColor: "#3782f2",
+            signalColor: "#f48709",
+            histColors: ["#35a776", "#79e0b3", "#e54150", "#ea969e"]
+          }
+        }
+      };
+    },
+    draw: function draw(ctx) {
+      var layout = this.$props.layout; // HISTOGRAM
+
+      var base = layout.$2screen(0) + 0.5;
+      var off = this.hist_width % 2 ? 0 : 0.5;
+      ctx.lineWidth = this.hist_width;
+      ctx.strokeStyle = this.color;
+      ctx.beginPath();
+      var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
+      var oldHist = null;
+
+      var _iterator = MACDHistvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var p = _step.value;
+          // console.log( "!!! p", p )
+          var x = layout.t2screen(p[0]) - width / 2;
+          var hist = p[1];
+          var y = hist > 0 ? layout.$2screen(hist) : layout.$2screen(0);
+          var height = Math.abs(layout.$2screen(hist) - layout.$2screen(0));
+          var color = hist >= 0 ? 0 : 2;
+
+          if (oldHist != null) {
+            if (hist >= 0) {
+              color = 0;
+
+              if (hist < oldHist) {
+                color = 1;
+              }
+            } else {
+              color = 2;
+
+              if (hist > oldHist) {
+                color = 3;
+              }
+            }
+          }
+
+          oldHist = hist;
+          ctx.fillStyle = this.sett.histColors[color]; // [p[4]]
+
+          ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height));
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      if (this.segment != null) {
+        ctx.lineWidth = this.segment.line_width;
+        ctx.strokeStyle = this.segment.color;
+        ctx.beginPath();
+        var x1 = layout.t2screen(this.segment.p1[0]);
+        var y1 = layout.$2screen(this.segment.p1[1]);
+        ctx.moveTo(x1, y1);
+        var x2 = layout.t2screen(this.segment.p2[0]);
+        var y2 = layout.$2screen(this.segment.p2[1]);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+    },
+    use_for: function use_for() {
+      return ['MACDHist'];
+    },
+    legend: function legend(values) {
+      var xs = values.slice(1, 4).map(function (x) {
+        return x.toFixed(Math.abs(x) > 0.001 ? 4 : 8);
+      });
+      return [{
+        value: xs[0],
+        color: this.hist_colors[values[4]]
+      }, {
+        value: xs[1],
+        color: this.macd_color
+      }, {
+        value: xs[2],
+        color: this.signal_color
+      }];
+    },
+    calc: function calc() {
+      return {
+        props: {
+          fast: {
+            def: 12,
+            text: 'Fast Length'
+          },
+          slow: {
+            def: 26,
+            text: 'Slow Length'
+          },
+          smooth: {
+            def: 9,
+            text: 'Signal EMA'
+          }
+        },
+        update: "\n                    let [macd, signal, hist] =\n                        macd(close, fast, slow, smooth)\n\n\t\t\t\t\tvar color = 0\n                    if (hist[0] >= 0) {\n                         color = 0\n                         if (hist[0] < hist[1]) color = 1\n                    } else {\n                        color = 2\n                        if (hist[0] > hist[1]) color = 3\n                    }\n\n                    return [hist[0]]\n                "
+      };
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    hist_width: function hist_width() {
+      return this.sett.histWidth || 4;
+    },
+    macd_width: function macd_width() {
+      return this.sett.macdWidth || 1;
+    },
+    signal_width: function signal_width() {
+      return this.sett.signalWidth || 1;
+    },
+    color: function color() {
+      return this.sett.defColor || "#42b28a";
+    },
+    macd_color: function macd_color() {
+      return this.sett.macdColor || "#3782f2";
+    },
+    signal_color: function signal_color() {
+      return this.sett.signalColor || "#f48709";
+    },
+    hist_colors: function hist_colors() {
+      return this.sett.histColors;
+    },
+    segment: function segment() {
+      return this.sett.segment;
+    },
+    hist_only: function hist_only() {
+      return this.sett.histOnly;
+    }
+  }
+});
+;// CONCATENATED MODULE: ./src/overlays/MACD/MACDHist.vue?vue&type=script&lang=js&
+ /* harmony default export */ const MACD_MACDHistvue_type_script_lang_js_ = (MACDHistvue_type_script_lang_js_); 
+;// CONCATENATED MODULE: ./src/overlays/MACD/MACDHist.vue
+var MACDHist_render, MACDHist_staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var MACDHist_component = normalizeComponent(
+  MACD_MACDHistvue_type_script_lang_js_,
+  MACDHist_render,
+  MACDHist_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var MACDHist_api; }
+MACDHist_component.options.__file = "src/overlays/MACD/MACDHist.vue"
+/* harmony default export */ const MACDHist = (MACDHist_component.exports);
 ;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/overlays/MFI/MFI.vue?vue&type=script&lang=js&
 
 /* harmony default export */ const MFIvue_type_script_lang_js_ = ({
@@ -4186,6 +4382,7 @@ XOhlcBars_component.options.__file = "src/overlays/XOhlcBars/XOhlcBars.vue"
 
 
 
+
 var Pack = {
   ALMA: ALMA,
   ATR: ATR,
@@ -4207,6 +4404,7 @@ var Pack = {
   KCW: KCW,
   LongShortTrades: LongShortTrades,
   MACD: MACD,
+  MACDHist: MACDHist,
   MFI: MFI,
   MOM: MOM,
   Markers: Markers,
