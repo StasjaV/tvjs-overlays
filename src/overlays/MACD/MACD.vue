@@ -45,11 +45,26 @@ export default {
 
 			var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]))
 
+			var oldHist = null;
             for (var p of this.$props.data) {
-				let x = layout.t2screen(p[0]) - width/2
-                let y = p[1] > 0 ? layout.$2screen(p[1]) : layout.$2screen(0)
-				let height = Math.abs(layout.$2screen(p[1]) - layout.$2screen(0))
-		        ctx.fillStyle = this.sett.histColors[p[4]]
+				let x = layout.t2screen(p[0]) - width/2;
+				let hist = p[1];
+                let y = ( hist > 0 ) ? layout.$2screen( hist ) : layout.$2screen(0)
+				let height = Math.abs(layout.$2screen( hist ) - layout.$2screen(0))
+
+				var color = ( hist >= 0 ) ? 0 : 2;
+				if ( oldHist != null ) {
+					if ( hist >= 0 ) {
+						color = 0;
+						if ( hist < oldHist ) { color = 1; }
+					} else {
+						color = 2;
+						if ( hist > oldHist ) { color = 3; }
+					}
+				}
+				oldHist = hist;
+
+		        ctx.fillStyle = this.sett.histColors[ color ]; // [p[4]
 		        ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height))
             }
 
@@ -83,7 +98,7 @@ export default {
 
             ctx.stroke()
 
-	
+
 			if ( this.segment != null ) {
 				ctx.lineWidth = this.segment.line_width
 				ctx.strokeStyle = this.segment.color
@@ -123,15 +138,7 @@ export default {
                     let [macd, signal, hist] =
                         macd(close, fast, slow, smooth)
 
-                    if (hist[0] >= 0) {
-                         var color = 0
-                         if (hist[0] < hist[1]) color = 1
-                    } else {
-                        color = 2
-                        if (hist[0] > hist[1]) color = 3
-                    }
-
-                    return [hist[0], macd[0], signal[0], color]
+                    return [hist[0], macd[0], signal[0]]
                 `
             }
         }

@@ -43,7 +43,6 @@ export default {
 
 			var oldHist = null;
             for (var p of this.$props.data) {
-				// console.log( "!!! p", p )
 				let x = layout.t2screen(p[0]) - width/2;
 				let hist = p[1];
                 let y = ( hist > 0 ) ? layout.$2screen( hist ) : layout.$2screen(0)
@@ -116,21 +115,6 @@ export default {
         },
         hist_width() {
             return this.sett.histWidth || 4
-        },
-        macd_width() {
-            return this.sett.macdWidth || 1
-        },
-        signal_width() {
-            return this.sett.signalWidth || 1
-        },
-        color() {
-            return this.sett.defColor || "#42b28a"
-        },
-        macd_color() {
-            return this.sett.macdColor || "#3782f2"
-        },
-        signal_color() {
-            return this.sett.signalColor || "#f48709"
         },
         hist_colors() {
             return this.sett.histColors
