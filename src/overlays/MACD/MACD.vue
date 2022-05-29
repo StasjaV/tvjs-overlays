@@ -53,38 +53,37 @@ export default {
 		        ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height))
             }
 
-			if ( !this.hist_only ) {
-				// MACD LINE
+			// MACD LINE
 
-	            ctx.beginPath()
+            ctx.beginPath()
 
-	            ctx.lineWidth = this.macd_width
-	            ctx.strokeStyle = this.macd_color
+            ctx.lineWidth = this.macd_width
+            ctx.strokeStyle = this.macd_color
 
-	            for (var p of this.$props.data) {
-	                let x = layout.t2screen(p[0])
-	                let y = layout.$2screen(p[2])
-	                ctx.lineTo(x, y)
-	            }
+            for (var p of this.$props.data) {
+                let x = layout.t2screen(p[0])
+                let y = layout.$2screen(p[2])
+                ctx.lineTo(x, y)
+            }
 
-	            ctx.stroke()
+            ctx.stroke()
 
-	            // SIGNAL LINE
+            // SIGNAL LINE
 
-	            ctx.beginPath()
+            ctx.beginPath()
 
-	            ctx.lineWidth = this.signal_width
-	            ctx.strokeStyle = this.signal_color
+            ctx.lineWidth = this.signal_width
+            ctx.strokeStyle = this.signal_color
 
-	            for (var p of this.$props.data) {
-	                let x = layout.t2screen(p[0])
-	                let y = layout.$2screen(p[3])
-	                ctx.lineTo(x, y)
-	            }
+            for (var p of this.$props.data) {
+                let x = layout.t2screen(p[0])
+                let y = layout.$2screen(p[3])
+                ctx.lineTo(x, y)
+            }
 
-	            ctx.stroke()
-			}
+            ctx.stroke()
 
+	
 			if ( this.segment != null ) {
 				ctx.lineWidth = this.segment.line_width
 				ctx.strokeStyle = this.segment.color

@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Fri May 20 2022
+ * TVJS Overlays - v0.5.0 - Sun May 29 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -2308,70 +2308,68 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
-
-          var _x2 = layout.t2screen(p[0]) - width / 2;
-
-          var _y2 = p[1] > 0 ? layout.$2screen(p[1]) : layout.$2screen(0);
-
+          var x = layout.t2screen(p[0]) - width / 2;
+          var y = p[1] > 0 ? layout.$2screen(p[1]) : layout.$2screen(0);
           var height = Math.abs(layout.$2screen(p[1]) - layout.$2screen(0));
           ctx.fillStyle = this.sett.histColors[p[4]];
-          ctx.fillRect(Math.floor(_x2), Math.floor(_y2), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height));
-        }
+          ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height));
+        } // MACD LINE
+
       } catch (err) {
         _iterator.e(err);
       } finally {
         _iterator.f();
       }
 
-      if (!this.hist_only) {
-        // MACD LINE
-        ctx.beginPath();
-        ctx.lineWidth = this.macd_width;
-        ctx.strokeStyle = this.macd_color;
+      ctx.beginPath();
+      ctx.lineWidth = this.macd_width;
+      ctx.strokeStyle = this.macd_color;
 
-        var _iterator2 = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
-            _step2;
+      var _iterator2 = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step2;
 
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var p = _step2.value;
-            var x = layout.t2screen(p[0]);
-            var y = layout.$2screen(p[2]);
-            ctx.lineTo(x, y);
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var p = _step2.value;
+
+          var _x = layout.t2screen(p[0]);
+
+          var _y = layout.$2screen(p[2]);
+
+          ctx.lineTo(_x, _y);
         }
-
-        ctx.stroke(); // SIGNAL LINE
-
-        ctx.beginPath();
-        ctx.lineWidth = this.signal_width;
-        ctx.strokeStyle = this.signal_color;
-
-        var _iterator3 = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
-            _step3;
-
-        try {
-          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-            var p = _step3.value;
-
-            var _x = layout.t2screen(p[0]);
-
-            var _y = layout.$2screen(p[3]);
-
-            ctx.lineTo(_x, _y);
-          }
-        } catch (err) {
-          _iterator3.e(err);
-        } finally {
-          _iterator3.f();
-        }
-
-        ctx.stroke();
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
       }
+
+      ctx.stroke(); // SIGNAL LINE
+
+      ctx.beginPath();
+      ctx.lineWidth = this.signal_width;
+      ctx.strokeStyle = this.signal_color;
+
+      var _iterator3 = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var p = _step3.value;
+
+          var _x2 = layout.t2screen(p[0]);
+
+          var _y2 = layout.$2screen(p[3]);
+
+          ctx.lineTo(_x2, _y2);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      ctx.stroke();
 
       if (this.segment != null) {
         ctx.lineWidth = this.segment.line_width;
@@ -2507,11 +2505,7 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
           side: 'offchart',
           settings: {
             histWidth: 4,
-            macdWidth: 1,
-            signalWidth: 1,
             defColor: "#42b28a",
-            macdColor: "#3782f2",
-            signalColor: "#f48709",
             histColors: ["#35a776", "#79e0b3", "#e54150", "#ea969e"]
           }
         }
@@ -2615,7 +2609,7 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
             text: 'Signal EMA'
           }
         },
-        update: "\n                    let [macd, signal, hist] =\n                        macd(close, fast, slow, smooth)\n\n\t\t\t\t\tvar color = 0\n                    if (hist[0] >= 0) {\n                         color = 0\n                         if (hist[0] < hist[1]) color = 1\n                    } else {\n                        color = 2\n                        if (hist[0] > hist[1]) color = 3\n                    }\n\n                    return [hist[0]]\n                "
+        update: "\n                    let [macd, signal, hist] =\n                        macd(close, fast, slow, smooth)\n\n                    return [hist[0]]\n                "
       };
     }
   },

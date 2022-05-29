@@ -18,11 +18,7 @@ export default {
                     side: 'offchart',
                     settings: {
                         histWidth: 4,
-                        macdWidth: 1,
-                        signalWidth: 1,
                         defColor: "#42b28a",
-                        macdColor: "#3782f2",
-                        signalColor: "#f48709",
                         histColors: [
                             "#35a776", "#79e0b3", "#e54150", "#ea969e"
                         ]
@@ -107,15 +103,6 @@ export default {
                 update: `
                     let [macd, signal, hist] =
                         macd(close, fast, slow, smooth)
-
-					var color = 0
-                    if (hist[0] >= 0) {
-                         color = 0
-                         if (hist[0] < hist[1]) color = 1
-                    } else {
-                        color = 2
-                        if (hist[0] > hist[1]) color = 3
-                    }
 
                     return [hist[0]]
                 `
