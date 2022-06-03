@@ -9,25 +9,31 @@ export default {
         meta_info() {
             return {
                 author: 'StdSquad', version: '1.0.0',
-                desc: 'Histogram plot' 
+                desc: 'Histogram plot'
             }
         },
 
         draw(ctx) {
-            ctx.lineWidth = this.line_width
-            ctx.strokeStyle = this.color
-            ctx.beginPath()
-
-            const layout = this.$props.layout
+			const layout = this.$props.layout
             const base = layout.$2screen(0) + 0.5
-            const off = this.line_width % 2 ? 0 : 0.5
+            ctx.strokeStyle = this.color
+
+			var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]))
+			if (width > 5) {
+				width -= 2
+			}
+
+			ctx.lineWidth = width
+
+            ctx.beginPath()
 
             // Color changed
             let changed = false
             for (var p of this.$props.data) {
 
-                let x = layout.t2screen(p[0]) - off
-                let y = layout.$2screen(p[1]) - 0.5
+				let x = layout.t2screen(p[0]) 
+                let y =  layout.$2screen(p[1])
+
                 let changed = false
 
                 if (p[2]) {
@@ -43,8 +49,11 @@ export default {
                     }
                     ctx.strokeStyle = this.color
                 }
-                if (changed) ctx.beginPath()
-                ctx.moveTo(x, base)
+                if (changed) {
+					ctx.beginPath()
+				}
+
+				ctx.moveTo(x, base)
                 ctx.lineTo(x, y)
             }
             ctx.stroke()

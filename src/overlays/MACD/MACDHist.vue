@@ -33,8 +33,6 @@ export default {
             // HISTOGRAM
 
             const base = layout.$2screen(0) + 0.5
-            const off = this.hist_width % 2 ? 0 : 0.5
-            ctx.lineWidth = this.hist_width
             ctx.strokeStyle = this.color
             ctx.beginPath()
 

@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Sun May 29 2022
+ * TVJS Overlays - v0.5.0 - Fri Jun 03 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -1260,12 +1260,17 @@ function Histogramvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len =
       };
     },
     draw: function draw(ctx) {
-      ctx.lineWidth = this.line_width;
-      ctx.strokeStyle = this.color;
-      ctx.beginPath();
       var layout = this.$props.layout;
       var base = layout.$2screen(0) + 0.5;
-      var off = this.line_width % 2 ? 0 : 0.5; // Color changed
+      ctx.strokeStyle = this.color;
+      var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
+
+      if (width > 5) {
+        width -= 2;
+      }
+
+      ctx.lineWidth = width;
+      ctx.beginPath(); // Color changed
 
       var changed = false;
 
@@ -1275,8 +1280,8 @@ function Histogramvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len =
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
-          var x = layout.t2screen(p[0]) - off;
-          var y = layout.$2screen(p[1]) - 0.5;
+          var x = layout.t2screen(p[0]);
+          var y = layout.$2screen(p[1]);
           var _changed = false;
 
           if (p[2]) {
@@ -1295,7 +1300,10 @@ function Histogramvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len =
             ctx.strokeStyle = this.color;
           }
 
-          if (_changed) ctx.beginPath();
+          if (_changed) {
+            ctx.beginPath();
+          }
+
           ctx.moveTo(x, base);
           ctx.lineTo(x, y);
         }
@@ -2296,8 +2304,6 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       var layout = this.$props.layout; // HISTOGRAM
 
       var base = layout.$2screen(0) + 0.5;
-      var off = this.hist_width % 2 ? 0 : 0.5;
-      ctx.lineWidth = this.hist_width;
       ctx.strokeStyle = this.color;
       ctx.beginPath();
       var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
@@ -2537,8 +2543,6 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
       var layout = this.$props.layout; // HISTOGRAM
 
       var base = layout.$2screen(0) + 0.5;
-      var off = this.hist_width % 2 ? 0 : 0.5;
-      ctx.lineWidth = this.hist_width;
       ctx.strokeStyle = this.color;
       ctx.beginPath();
       var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
