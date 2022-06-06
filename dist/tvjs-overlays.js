@@ -2405,7 +2405,7 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       ctx.stroke();
 
       if (this.segment != null) {
-        ctx.lineWidth = this.segment.line_width;
+        ctx.lineWidth = this.segment.lineWidth;
         ctx.strokeStyle = this.segment.color;
         ctx.beginPath();
         var x1 = layout.t2screen(this.segment.p1[0]);
@@ -2598,7 +2598,7 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
       }
 
       if (this.segment != null) {
-        ctx.lineWidth = this.segment.line_width;
+        ctx.lineWidth = this.segment.lineWidth;
         ctx.strokeStyle = this.segment.color;
         ctx.beginPath();
         var x1 = layout.t2screen(this.segment.p1[0]);

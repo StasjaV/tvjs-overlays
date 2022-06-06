@@ -65,7 +65,7 @@ export default {
             }
 
 			if ( this.segment != null ) {
-				ctx.lineWidth = this.segment.line_width
+				ctx.lineWidth = this.segment.lineWidth
 				ctx.strokeStyle = this.segment.color
 				ctx.beginPath()
 
