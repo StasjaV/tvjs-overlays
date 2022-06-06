@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Fri Jun 03 2022
+ * TVJS Overlays - v0.5.0 - Mon Jun 06 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -2304,9 +2304,13 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       var layout = this.$props.layout; // HISTOGRAM
 
       var base = layout.$2screen(0) + 0.5;
-      ctx.strokeStyle = this.color;
-      ctx.beginPath();
       var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
+
+      if (width > 5) {
+        width -= 2;
+      }
+
+      ctx.lineWidth = width;
       var oldHist = null;
 
       var _iterator = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
@@ -2315,10 +2319,9 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
-          var x = layout.t2screen(p[0]) - width / 2;
           var hist = p[1];
-          var y = hist > 0 ? layout.$2screen(hist) : layout.$2screen(0);
-          var height = Math.abs(layout.$2screen(hist) - layout.$2screen(0));
+          var x = layout.t2screen(p[0]);
+          var y = layout.$2screen(p[1]);
           var color = hist >= 0 ? 0 : 2;
 
           if (oldHist != null) {
@@ -2338,9 +2341,11 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
           }
 
           oldHist = hist;
-          ctx.fillStyle = this.sett.histColors[color]; // [p[4]
-
-          ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height));
+          ctx.strokeStyle = this.sett.histColors[color];
+          ctx.beginPath();
+          ctx.moveTo(x, base);
+          ctx.lineTo(x, y);
+          ctx.stroke();
         } // MACD LINE
 
       } catch (err) {
@@ -2543,9 +2548,13 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
       var layout = this.$props.layout; // HISTOGRAM
 
       var base = layout.$2screen(0) + 0.5;
-      ctx.strokeStyle = this.color;
-      ctx.beginPath();
       var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]));
+
+      if (width > 5) {
+        width -= 2;
+      }
+
+      ctx.lineWidth = width;
       var oldHist = null;
 
       var _iterator = MACDHistvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
@@ -2554,10 +2563,9 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
-          var x = layout.t2screen(p[0]) - width / 2;
           var hist = p[1];
-          var y = hist > 0 ? layout.$2screen(hist) : layout.$2screen(0);
-          var height = Math.abs(layout.$2screen(hist) - layout.$2screen(0));
+          var x = layout.t2screen(p[0]);
+          var y = layout.$2screen(p[1]);
           var color = hist >= 0 ? 0 : 2;
 
           if (oldHist != null) {
@@ -2577,9 +2585,11 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
           }
 
           oldHist = hist;
-          ctx.fillStyle = this.sett.histColors[color]; // [p[4]]
-
-          ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height));
+          ctx.strokeStyle = this.sett.histColors[color];
+          ctx.beginPath();
+          ctx.moveTo(x, base);
+          ctx.lineTo(x, y);
+          ctx.stroke();
         }
       } catch (err) {
         _iterator.e(err);

@@ -36,19 +36,18 @@ export default {
 
             // HISTOGRAM
 
-            const base = layout.$2screen(0) + 0.5
-            ctx.strokeStyle = this.color
-            ctx.beginPath()
-
-
-			var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]))
+			const base = layout.$2screen(0) + 0.5
+            var width = Math.abs(layout.t2screen(this.$props.data[0][0]) - layout.t2screen(this.$props.data[1][0]))
+			if (width > 5) {
+				width -= 2
+			}
+			ctx.lineWidth = width
 
 			var oldHist = null;
             for (var p of this.$props.data) {
-				let x = layout.t2screen(p[0]) - width/2;
 				let hist = p[1];
-                let y = ( hist > 0 ) ? layout.$2screen( hist ) : layout.$2screen(0)
-				let height = Math.abs(layout.$2screen( hist ) - layout.$2screen(0))
+				let x = layout.t2screen(p[0])
+				let y = layout.$2screen( p[1] )
 
 				var color = ( hist >= 0 ) ? 0 : 2;
 				if ( oldHist != null ) {
@@ -61,10 +60,13 @@ export default {
 					}
 				}
 				oldHist = hist;
-
-		        ctx.fillStyle = this.sett.histColors[ color ]; // [p[4]
-		        ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(width) - 1, Math.floor(height) == 0 ? 1 : Math.floor(height))
-            }
+				
+				ctx.strokeStyle = this.sett.histColors[ color ]
+				ctx.beginPath()
+				ctx.moveTo(x, base)
+				ctx.lineTo(x, y)
+				ctx.stroke()
+			}
 
 			// MACD LINE
 
