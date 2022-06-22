@@ -124,6 +124,33 @@ export default {
 				ctx.lineTo(x2, y2)
 
 				ctx.stroke()
+
+
+				ctx.fillStyle = this.segment.color
+				ctx.beginPath();
+				if (this.segment.p1[1] < 0) {
+					ctx.moveTo(x1 - this.segment.lineWidth, y1 + Math.round(this.segment.lineWidth / 2))
+					ctx.lineTo(x1, y1 - Math.round(this.segment.lineWidth * 1.5));
+					ctx.lineTo(x1 + this.segment.lineWidth, y1 + Math.round(this.segment.lineWidth / 2));
+				} else {
+					ctx.moveTo(x1 - this.segment.lineWidth, y1 - Math.round(this.segment.lineWidth / 2))
+					ctx.lineTo(x1, y1 + Math.round(this.segment.lineWidth * 1.5));
+					ctx.lineTo(x1 + this.segment.lineWidth, y1 - Math.round(this.segment.lineWidth / 2));
+				}
+				ctx.fill();
+
+				ctx.beginPath();
+				if (this.segment.p2[1] < 0) {
+					ctx.moveTo(x2 - this.segment.lineWidth, y2 + Math.round(this.segment.lineWidth / 2))
+					ctx.lineTo(x2, y2 - Math.round(this.segment.lineWidth * 1.5));
+					ctx.lineTo(x2 + this.segment.lineWidth, y2 + Math.round(this.segment.lineWidth / 2));
+				} else {
+					ctx.moveTo(x2 - this.segment.lineWidth, y2 - Math.round(this.segment.lineWidth / 2))
+					ctx.lineTo(x2, y2 + Math.round(this.segment.lineWidth * 1.5));
+					ctx.lineTo(x2 + this.segment.lineWidth, y2 - Math.round(this.segment.lineWidth / 2));
+				}
+				ctx.fill();
+
 			}
 
         },

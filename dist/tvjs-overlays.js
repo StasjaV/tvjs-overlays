@@ -2429,6 +2429,33 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
 
         ctx.lineTo(x2, y2);
         ctx.stroke();
+        ctx.fillStyle = this.segment.color;
+        ctx.beginPath();
+
+        if (this.segment.p1[1] < 0) {
+          ctx.moveTo(x1 - this.segment.lineWidth, y1 + Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x1, y1 - Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x1 + this.segment.lineWidth, y1 + Math.round(this.segment.lineWidth / 2));
+        } else {
+          ctx.moveTo(x1 - this.segment.lineWidth, y1 - Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x1, y1 + Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x1 + this.segment.lineWidth, y1 - Math.round(this.segment.lineWidth / 2));
+        }
+
+        ctx.fill();
+        ctx.beginPath();
+
+        if (this.segment.p2[1] < 0) {
+          ctx.moveTo(x2 - this.segment.lineWidth, y2 + Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x2, y2 - Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x2 + this.segment.lineWidth, y2 + Math.round(this.segment.lineWidth / 2));
+        } else {
+          ctx.moveTo(x2 - this.segment.lineWidth, y2 - Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x2, y2 + Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x2 + this.segment.lineWidth, y2 - Math.round(this.segment.lineWidth / 2));
+        }
+
+        ctx.fill();
       }
     },
     use_for: function use_for() {
@@ -2604,7 +2631,8 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
           ctx.moveTo(x, base);
           ctx.lineTo(x, y);
           ctx.stroke();
-        }
+        } // SEGMENT
+
       } catch (err) {
         _iterator.e(err);
       } finally {
@@ -2636,6 +2664,33 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
 
         ctx.lineTo(x2, y2);
         ctx.stroke();
+        ctx.fillStyle = this.segment.color;
+        ctx.beginPath();
+
+        if (this.segment.p1[1] < 0) {
+          ctx.moveTo(x1 - this.segment.lineWidth, y1 + Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x1, y1 - Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x1 + this.segment.lineWidth, y1 + Math.round(this.segment.lineWidth / 2));
+        } else {
+          ctx.moveTo(x1 - this.segment.lineWidth, y1 - Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x1, y1 + Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x1 + this.segment.lineWidth, y1 - Math.round(this.segment.lineWidth / 2));
+        }
+
+        ctx.fill();
+        ctx.beginPath();
+
+        if (this.segment.p2[1] < 0) {
+          ctx.moveTo(x2 - this.segment.lineWidth, y2 + Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x2, y2 - Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x2 + this.segment.lineWidth, y2 + Math.round(this.segment.lineWidth / 2));
+        } else {
+          ctx.moveTo(x2 - this.segment.lineWidth, y2 - Math.round(this.segment.lineWidth / 2));
+          ctx.lineTo(x2, y2 + Math.round(this.segment.lineWidth * 1.5));
+          ctx.lineTo(x2 + this.segment.lineWidth, y2 - Math.round(this.segment.lineWidth / 2));
+        }
+
+        ctx.fill();
       }
     },
     use_for: function use_for() {
