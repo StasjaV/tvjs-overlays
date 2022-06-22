@@ -64,6 +64,8 @@ export default {
 				ctx.stroke()
             }
 
+			// SEGMENT
+
 			if ( this.segment != null ) {
 				ctx.lineWidth = this.segment.lineWidth
 				ctx.strokeStyle = this.segment.color
@@ -71,10 +73,20 @@ export default {
 
 				let x1 = layout.t2screen(this.segment.p1[0])
 				let y1 = layout.$2screen(this.segment.p1[1])
+				if (this.segment.p1[1] < 0) {
+					y1 += this.segment.lineWidth
+				} else {
+					y1 -= this.segment.lineWidth
+				}
 				ctx.moveTo(x1, y1)
 
 				let x2 = layout.t2screen(this.segment.p2[0])
 				let y2 = layout.$2screen(this.segment.p2[1])
+				if (this.segment.p2[1] < 0) {
+					y2 += this.segment.lineWidth
+				} else {
+					y2 -= this.segment.lineWidth
+				}
 				ctx.lineTo(x2, y2)
 
 				ctx.stroke()

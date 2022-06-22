@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Mon Jun 06 2022
+ * TVJS Overlays - v0.5.0 - Wed Jun 22 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -2402,7 +2402,7 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
         _iterator3.f();
       }
 
-      ctx.stroke();
+      ctx.stroke(); // SEGMENT
 
       if (this.segment != null) {
         ctx.lineWidth = this.segment.lineWidth;
@@ -2410,9 +2410,23 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
         ctx.beginPath();
         var x1 = layout.t2screen(this.segment.p1[0]);
         var y1 = layout.$2screen(this.segment.p1[1]);
+
+        if (this.segment.p1[1] < 0) {
+          y1 += this.segment.lineWidth;
+        } else {
+          y1 -= this.segment.lineWidth;
+        }
+
         ctx.moveTo(x1, y1);
         var x2 = layout.t2screen(this.segment.p2[0]);
         var y2 = layout.$2screen(this.segment.p2[1]);
+
+        if (this.segment.p2[1] < 0) {
+          y2 += this.segment.lineWidth;
+        } else {
+          y2 -= this.segment.lineWidth;
+        }
+
         ctx.lineTo(x2, y2);
         ctx.stroke();
       }
@@ -2603,9 +2617,23 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
         ctx.beginPath();
         var x1 = layout.t2screen(this.segment.p1[0]);
         var y1 = layout.$2screen(this.segment.p1[1]);
+
+        if (this.segment.p1[1] < 0) {
+          y1 += this.segment.lineWidth;
+        } else {
+          y1 -= this.segment.lineWidth;
+        }
+
         ctx.moveTo(x1, y1);
         var x2 = layout.t2screen(this.segment.p2[0]);
         var y2 = layout.$2screen(this.segment.p2[1]);
+
+        if (this.segment.p2[1] < 0) {
+          y2 += this.segment.lineWidth;
+        } else {
+          y2 -= this.segment.lineWidth;
+        }
+
         ctx.lineTo(x2, y2);
         ctx.stroke();
       }
