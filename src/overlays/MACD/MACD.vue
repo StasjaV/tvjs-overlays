@@ -179,6 +179,10 @@ export default {
 				}
 			}
 
+			if (p[1].position == null) {
+				p[1].position = [0, 0]
+			}
+
 			if (p[1].direction == null) {
 				p[1].direction = "down"
 			}
@@ -190,9 +194,9 @@ export default {
             let radius = 2
             let height = p[1].size.height
             let width = p[1].size.width
-            let x = layout.t2screen(p[0]) - width * 0.5
+            let x = layout.t2screen(p[0]) - width * 0.5 + p[1].position[0]
 
-            let y = layout.$2screen(p[1].$)
+            let y = layout.$2screen(p[1].$) + p[1].position[1]
 			if (p[1].direction == "down") {
 				y = y - (height + height / 5)
 			} else {

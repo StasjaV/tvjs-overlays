@@ -22,9 +22,7 @@ export default {
             this.selected = null
 
             for (var p of this.$props.data) {
-
                 this.draw_marker(ctx, p)
-
             }
 
             let f = this.data.find(x => x[1].sel)
@@ -34,7 +32,6 @@ export default {
         },
 
         draw_marker(ctx, p) {
-
 			if (p[1].size == null)
 			{
 				if (p[1].sel) {
@@ -42,6 +39,10 @@ export default {
 				} else {
 					p[1].size = { height: 14, width: 13, font: 11 };
 				}
+			}
+
+			if (p[1].position == null) {
+				p[1].position = [0, 0]
 			}
 
 			if (p[1].direction == null) {
@@ -55,9 +56,9 @@ export default {
             let radius = 2
 			let height = p[1].size.height
             let width = p[1].size.width
-            let x = layout.t2screen(p[0]) - width * 0.5
+            let x = layout.t2screen(p[0]) - width * 0.5 + p[1].position[0]
 
-			let y = layout.$2screen(p[1].$)
+			let y = layout.$2screen(p[1].$) + p[1].position[1]
 			if (p[1].direction == "down") {
 				y = y - (height + height / 5)
 			} else {
