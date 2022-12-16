@@ -106,12 +106,14 @@ export default {
 
 			// MARKER
 
-			if ( this.marker != null ) {
+			if ( this.markers != null ) {
 				ctx.lineWidth = 1.5
-	            ctx.strokeStyle = 'black'
-	            document.body.style.cursor = 'auto'
-	            this.selected = null
-	            this.draw_marker(ctx, this.marker)
+				ctx.strokeStyle = 'black'
+				document.body.style.cursor = 'auto'
+				for (var m of this.markers) {
+					this.selected = null
+	                this.draw_marker(ctx, m)
+	            }
 			}
         },
 
@@ -312,8 +314,8 @@ export default {
 		segment() {
 			return this.sett.segment
 		},
-		marker() {
-			return this.sett.marker
+		markers() {
+			return this.sett.markers
 		},
 		hist_only() {
 			return this.sett.histOnly

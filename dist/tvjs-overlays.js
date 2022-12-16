@@ -1,5 +1,5 @@
 /*!
- * TVJS Overlays - v0.5.0 - Tue Sep 06 2022
+ * TVJS Overlays - v0.5.0 - Fri Dec 16 2022
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -2500,12 +2500,25 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       } // MARKER
 
 
-      if (this.marker != null) {
+      if (this.markers != null) {
         ctx.lineWidth = 1.5;
         ctx.strokeStyle = 'black';
         document.body.style.cursor = 'auto';
-        this.selected = null;
-        this.draw_marker(ctx, this.marker);
+
+        var _iterator4 = MACDvue_type_script_lang_js_createForOfIteratorHelper(this.markers),
+            _step4;
+
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var m = _step4.value;
+            this.selected = null;
+            this.draw_marker(ctx, m);
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
       }
     },
     draw_segment: function draw_segment(ctx, segment) {
@@ -2713,8 +2726,8 @@ function MACDvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
     segment: function segment() {
       return this.sett.segment;
     },
-    marker: function marker() {
-      return this.sett.marker;
+    markers: function markers() {
+      return this.sett.markers;
     },
     hist_only: function hist_only() {
       return this.sett.histOnly;
@@ -2835,12 +2848,25 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
       } // MARKER
 
 
-      if (this.marker != null) {
+      if (this.markers != null) {
         ctx.lineWidth = 1.5;
         ctx.strokeStyle = 'black';
         document.body.style.cursor = 'auto';
-        this.selected = null;
-        this.draw_marker(ctx, this.marker);
+
+        var _iterator2 = MACDHistvue_type_script_lang_js_createForOfIteratorHelper(this.markers),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var m = _step2.value;
+            this.selected = null;
+            this.draw_marker(ctx, m);
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
       }
     },
     draw_segment: function draw_segment(ctx, segment) {
@@ -3033,8 +3059,8 @@ function MACDHistvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len ==
     segment: function segment() {
       return this.sett.segment;
     },
-    marker: function marker() {
-      return this.sett.marker;
+    markers: function markers() {
+      return this.sett.markers;
     },
     hist_only: function hist_only() {
       return this.sett.histOnly;
